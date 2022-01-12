@@ -14,7 +14,7 @@ export default function Crud() {
 
   const getData = () => {
     setLoading(true);
-    axios.get('http://localhost:5000/api')
+    axios.get('https://express-crud-backend.herokuapp.com/api')
     .then((res) => { 
       setData(res.data)
       setLoading(false); 
