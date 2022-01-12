@@ -49,7 +49,7 @@ export default function Crud() {
               <Fragment>Loading...</Fragment>
             ) : (data.map((item, index) => {
             return (
-              <Fragment>
+              <Fragment key={index}>
                 <tr className='border-2 border-gray-200'>
                   <td className='border-2 border-gray-200 mb-1 px-1'>{index + 1}</td>
                   <td className='border-2 border-gray-200 mb-1 px-1'>{item.title}</td>
