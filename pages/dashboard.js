@@ -4,7 +4,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import Head from 'next/head';
 import axios from 'axios';
 
-export default function crud() {
+export default function Crud() {
   // get data from database
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
