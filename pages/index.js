@@ -7,7 +7,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import {Accordion} from 'react-bootstrap';
 
-export default function crud() {
+export default function Crud() {
   // get data from database
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
