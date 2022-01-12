@@ -54,7 +54,6 @@ export default function Crud() {
       </nav>
 
       <main>
-        {/*<img src='https://images.unsplash.com/photo-1555099962-4199c345e5dd?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9' className='w-100'/>*/}
         <div>
           <div className='mx-auto mb-5 text-center w-5/6' style={{marginTop:'75px'}}>
             <h3 className='font-bold text-2xl text-blue-700 mt-2'>
@@ -68,7 +67,7 @@ export default function Crud() {
               <p className='text-center font-bold text-xl'>Loading...</p>
               ) : (data.map((item, index) => {
                 return (
-                  <Accordion.Item eventKey={index} className='my-2 shadow'>
+                  <Accordion.Item eventKey={index} className='my-2 shadow' key={index}>
                     <Accordion.Header>
                       <p className='font-bold my-0 hover:underline'>{item.title}</p>
                     </Accordion.Header>
