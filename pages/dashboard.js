@@ -57,12 +57,12 @@ export default function Crud() {
                   <td className='border-2 border-gray-200 mb-1 px-1'>{item.link}</td>
                   <td className='border-2 border-gray-200 mb-1 px-1'>
                     <button className='bg-blue-500 hover:bg-blue-700 font-semibold mx-1 py-1 px-2 rounded text-white'>
-                      <i class="bi bi-pencil-fill"></i>
+                      <i className="bi bi-pencil-fill"></i>
                     </button>
                   </td>
                   <td className='border-2 border-gray-200 mb-1 px-1'>
                     <button className='bg-blue-500 hover:bg-blue-700 font-semibold mx-1 py-1 px-2 rounded text-white'>
-                      <i class="bi bi-trash-fill"></i>
+                      <i className="bi bi-trash-fill"></i>
                     </button>
                   </td>
                 </tr>
