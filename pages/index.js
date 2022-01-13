@@ -1,9 +1,11 @@
-import React, { Fragment, useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../styles/Home.module.css';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
+import Footer from '../components/Footer';
 import axios from 'axios';
 import {Accordion} from 'react-bootstrap';
 
@@ -29,7 +31,7 @@ export default function Crud() {
   }, []);
 
   return (
-    <div>
+    <div className='bg-slate-50 opensans m-0'>
 
       <Head>
         <title>Web Dev - Web App</title>
@@ -37,40 +39,38 @@ export default function Crud() {
         <link rel="icon" href="https://clipground.com/images/programming-logo-clipart-5.jpg"></link>
       </Head>
 
-      <nav
-        style={{position:'fixed'}}
-        className='bg-blue-50 flex justify-center m-0 py-1 px-0 top-0 shadow-sm space-x-3 text-dark w-100 z-10'
+      <nav style={{backgroundColor:'transparent',position:'fixed'}}
+        className='flex justify-center m-0 py-1 px-0 top-0 shadow-sm space-x-3 text-black w-100 z-10'
       >
         {[
           ['Home', '/',1],
-          ['Login','/login',2],
+          ['Admin','/login',2],
           ['Register', '/register',3],
         ].map(([title, url, id]) => (
           <Link href={url} key={id}>
-            <a className="font-bold hover:bg-blue-100 no-underline roboto rounded-lg my-0 px-3 py-2 text-gray-700 hover:text-gray-900">
+            <a className="font-bold bg-green-300 hover:bg-green-400 no-underline my-0 px-3 py-2 rounded-lg text-white">
               {title}
             </a>
           </Link>
         ))}
       </nav>
 
-      <main>
-        <div>
-          <div className='mx-auto mb-5 text-center w-5/6' style={{marginTop:'75px'}}>
-            <h3 className='font-bold text-2xl text-blue-700 mt-2'>
-              Learning Path Web Dev
-            </h3>
-            <p>Compilation of Web Programming Front End & Back End (Node.js) Learning Sources</p>
-            <p className='font-bold'>by M. Rafli Ramadhan</p>
+      <main className='pt-0 mt-0'>
+        <img src="/wallpaper.jpg" alt="coding" width='100%' height='1000' />
+        <div className='mb-4'>
+          <div className='mx-auto mb-5 p-0 space-y-1 md:space-y-3 lg:space-y-4 text-left w-11/12 lg:w-4/5 text-white' style={{'margin-top':'-40%'}}>
+            <h3 className='font-bold mt-2 text-xl md:text-3xl lg:text-5xl'>Learning Path Web Dev</h3>
+            <p className=''>Compilation of Web Programming Back End (Node.js) Learning Sources</p>
+            <p className=''>by M. Rafli Ramadhan</p>
           </div>
-          <Accordion defaultActiveKey="0" className='bg-slate-200 mx-auto mt-1 mb-3 w-5/6'>
+          <Accordion defaultActiveKey="0" className='bg-slate-50 justify-center mt-1 mb-3 mx-auto w-11/12 lg:w-5/6'>
             {loading ? (
               <p className='text-center font-bold text-xl'>Loading...</p>
               ) : (data.map((item, index) => {
                 return (
                   <Accordion.Item eventKey={index} className='my-2 shadow' key={index}>
                     <Accordion.Header>
-                      <p className='font-bold my-0 hover:underline'>{item.title}</p>
+                      <p className='font-bold my-0 hover:text-cyan-700'>{item.title}</p>
                     </Accordion.Header>
                     <Accordion.Body className='p-0'>
                       <iframe src={item.link}
@@ -84,6 +84,9 @@ export default function Crud() {
           </Accordion>
         </div>
       </main>
+      <hr/>
+      <Footer/>
+
     </div>
   )
 }
