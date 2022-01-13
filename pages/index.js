@@ -70,7 +70,7 @@ export default function Crud() {
                 return (
                   <Accordion.Item eventKey={index} className='my-2 shadow' key={index}>
                     <Accordion.Header>
-                      <p className='font-bold my-0 hover:text-cyan-700'>{item.title}</p>
+                      <p className='font-bold my-0 hover:text-cyan-700'>{item.title} : {item.link}</p>
                     </Accordion.Header>
                     <Accordion.Body className='p-0'>
                       <iframe src={item.link}
