@@ -56,16 +56,16 @@ export default function Crud() {
       </nav>
 
       <main className='pt-0 mt-0'>
-        <img src="/wallpaper.jpg" alt="coding" width='100%' height='1000' />
+        <img src="/wallpaper.jpg" alt="coding" width='100%' height='100%' />
         <div className='mb-4'>
-          <div className='mx-auto mb-5 p-0 space-y-1 md:space-y-3 lg:space-y-4 text-left w-11/12 lg:w-4/5 text-white' style={{'margin-top':'-40%'}}>
+          <div className='mx-auto mb-5 p-0 space-y-1 md:space-y-3 lg:space-y-4 text-left w-11/12 lg:w-4/5 text-white' style={{'margin-top':'-50%'}}>
             <h3 className='font-bold mt-2 text-xl md:text-3xl lg:text-5xl'>Learning Path Web Dev</h3>
             <p className=''>Compilation of Web Programming Back End (Node.js) Learning Sources</p>
             <p className=''>by M. Rafli Ramadhan</p>
           </div>
           <Accordion defaultActiveKey="0" className='bg-slate-50 justify-center mt-1 mb-3 mx-auto w-11/12 lg:w-5/6'>
             {loading ? (
-              <p className='text-center font-bold text-xl'>Loading...</p>
+              <p className='bg-white font-bold p-2 text-center text-xl shadow'>Loading...</p>
               ) : (data.map((item, index) => {
                 return (
                   <Accordion.Item eventKey={index} className='my-2 shadow' key={index}>
