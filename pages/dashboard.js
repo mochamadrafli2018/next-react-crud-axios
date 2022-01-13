@@ -38,7 +38,7 @@ export default function Crud() {
       link,
     })
     .then(() => { 
-      setSuccessAddData(true) 
+      setSuccessAddData(true)
     })
     .catch((err) => { 
       setSuccessAddData(false) 
@@ -69,13 +69,13 @@ export default function Crud() {
           onSubmit={submitNewData}
           className='border-2 border-blue-500 my-2 mx-auto p-3 rounded shadow w-2/5'
         >
-          <h3 className='font-bold text-2xl text-blue-700 text-center'>Tambah atau Ubah Data</h3>
+          <h3 className='font-bold text-2xl text-blue-700 text-center'>Add or Change Data</h3>
           <hr/>
           <div className='col my-1'>
             <label className='form-label mx-auto'>Title</label>
             <input className='form-control border-2 hover:border-blue-600 mx-auto rounded'
               type='text'  
-              placeholder='Masukkan Nama Penyakit'
+              placeholder='Input Title'
               value={title} 
               onChange={(e) => {
                 setTitle(e.target.value);
@@ -87,7 +87,7 @@ export default function Crud() {
             <label className='form-label mx-auto'>Topic</label>
             <input className='form-control border-2 hover:border-blue-600 mx-auto rounded'
               type='text'
-              placeholder='Masukkan Data Gejala-Gejala'
+              placeholder='Input Topic'
               value={topic} 
               onChange={(e) => {
                 setTopic(e.target.value);
@@ -96,10 +96,10 @@ export default function Crud() {
             />
           </div>
           <div className='col my-1'>
-            <label className='form-label mx-auto'>Topic</label>
+            <label className='form-label mx-auto'>Link</label>
             <input className='form-control border-2 hover:border-blue-600 mx-auto rounded'
               type='text'
-              placeholder='Masukkan Data Gejala-Gejala'
+              placeholder='Input Link'
               value={link} 
               onChange={(e) => {
                 setLink(e.target.value);
@@ -111,10 +111,11 @@ export default function Crud() {
             <button type="submit" className="btn btn-primary">Submit</button>
           </div>
           {successAddData === true && (
-            <div className="alert alert-primary mt-1">Data berhasil di tambahkan</div>
+            <div className="alert alert-primary my-1">Data berhasil di tambahkan</div>
           )}     
         </form>
 
+        <hr/>
         <h3 className='font-bold text-2xl text-blue-700 text-center'>Dashboard</h3>
         <table className='mx-auto my-2'>
           <tr className='bg-gray-100 border-2 border-gray-200'>
@@ -136,12 +137,12 @@ export default function Crud() {
                   <td className='border-2 border-gray-200 mb-1 px-1'>{item.topic}</td>
                   <td className='border-2 border-gray-200 mb-1 px-1'>{item.link}</td>
                   <td className='border-2 border-gray-200 mb-1 px-1'>
-                    <button className='bg-blue-500 hover:bg-blue-700 font-semibold mx-1 py-1 px-2 rounded text-white'>
+                    <button className='bg-green-500 hover:bg-blue-700 font-semibold mx-1 py-1 px-2 rounded text-white'>
                       <i className="bi bi-pencil-fill"></i>
                     </button>
                   </td>
                   <td className='border-2 border-gray-200 mb-1 px-1'>
-                    <button className='bg-blue-500 hover:bg-blue-700 font-semibold mx-1 py-1 px-2 rounded text-white'>
+                    <button className='bg-red-500 hover:bg-blue-700 font-semibold mx-1 py-1 px-2 rounded text-white'>
                       <i className="bi bi-trash-fill"></i>
                     </button>
                   </td>
