@@ -59,7 +59,7 @@ export default function Crud() {
         <img src="/wallpaper.jpg" alt="coding" width='100%' height='100%' />
         <div className='mb-4'>
           <div className='mx-auto mb-5 p-0 space-y-1 md:space-y-3 lg:space-y-4 text-left w-11/12 lg:w-4/5 text-white' style={{'margin-top':'-50%'}}>
-            <h3 className='font-bold mt-2 text-xl md:text-3xl lg:text-5xl'>Learning Path Web Dev</h3>
+            <h3 className='font-bold mt-2 text-xl md:text-3xl lg:text-5xl underline'>Learning Path Web Dev</h3>
             <p className=''>Compilation of Web Programming Back End (Node.js) Learning Sources</p>
             <p className=''>by M. Rafli Ramadhan</p>
           </div>
