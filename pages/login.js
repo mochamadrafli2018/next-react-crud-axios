@@ -46,7 +46,6 @@ export default function Login() {
           ['Home', '/',1],
           ['Login','/login',2],
           ['Register', '/register',3],
-          ['Dashboard', 'https://react-eyechatbot.vercel.app',4],
         ].map(([title, url, id]) => (
           <Link href={url} key={id}>
             <a className="font-bold hover:bg-blue-100 no-underline roboto rounded-lg my-0 px-3 py-2 text-gray-700 hover:text-gray-900">
