@@ -182,10 +182,8 @@ export default function Register() {
                       <div className="col-md-6">
                         <div className="mb-3">
                           <label className="form-label">Gender</label>
-                          <input id="myText" type="text" value="colors"
-                            value={gender}
-                          />
                           <select className="form-control" id="exampleFormControlSelect1"
+                            value={gender}
                             onChange={(e) => {
                               setGender(e.target.value);
                               setSend(false);
