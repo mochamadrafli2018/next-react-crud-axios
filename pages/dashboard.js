@@ -13,6 +13,7 @@ export default function Crud() {
   const [link, setLink] = useState('');
   const [successAddData, setSuccessAddData] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [setSuccessDeleteData] = useState(false);
 
   const getData = () => {
     setLoading(true);
@@ -37,12 +38,33 @@ export default function Crud() {
       topic,
       link,
     })
-    .then(() => { 
+    .then(() => {
       setSuccessAddData(true)
     })
     .catch((err) => { 
       setSuccessAddData(false) 
     })
+  }
+
+  // edit data
+  const editData = () => {}
+  
+  // delete data
+  const deleteData = () => {
+    try {
+      axios.delete(URL, {
+        headers: {
+          Authorization: authorizationToken
+        },
+        data: {
+          source: source
+        }
+      })
+      setSuccessDeleteData(true)
+    }
+    catch(err) { 
+      setSuccessDeleteData(false) 
+    }
   }
 
   return (
@@ -110,16 +132,16 @@ export default function Crud() {
           <div className="d-grid gap-2 mt-2">
             <button type="submit" className="btn btn-primary">Submit</button>
           </div>
-          {successAddData === true && (
+          {successAddData === true (
             <div className="alert alert-primary my-1">Data berhasil di tambahkan</div>
-          )}     
+          )}
         </form>
 
         <hr/>
         <h3 className='font-bold text-2xl text-blue-700 text-center'>Dashboard</h3>
         <table className='mx-auto my-2'>
           <tr className='bg-gray-100 border-2 border-gray-200'>
-            <th className='border-2 border-gray-200 text-center'>Number</th>
+            <th className='border-2 border-gray-200 text-center'>id</th>
             <th className='border-2 border-gray-200 text-center'>Title</th>
             <th className='border-2 border-gray-200 text-center'>Topic</th>
             <th className='border-2 border-gray-200 text-center'>Link</th>
@@ -127,29 +149,29 @@ export default function Crud() {
             <th className='border-2 border-gray-200 text-center'>Delete</th>
           </tr>
           {loading ? (
-              <Fragment>Loading...</Fragment>
-            ) : (data.map((item, index) => {
+            <Fragment>Loading...</Fragment>
+          ) : (data.map((item, index) => {
             return (
               <Fragment key={index}>
                 <tr className='border-2 border-gray-200'>
-                  <td className='border-2 border-gray-200 mb-1 px-1'>{index + 1}</td>
+                  <td className='border-2 border-gray-200 mb-1 px-1'>{item.id}</td>
                   <td className='border-2 border-gray-200 mb-1 px-1'>{item.title}</td>
                   <td className='border-2 border-gray-200 mb-1 px-1'>{item.topic}</td>
                   <td className='border-2 border-gray-200 mb-1 px-1'>{item.link}</td>
                   <td className='border-2 border-gray-200 mb-1 px-1'>
-                    <button className='bg-green-500 hover:bg-blue-700 font-semibold mx-1 py-1 px-2 rounded text-white'>
+                    <button onClick={editData} className='bg-green-500 hover:bg-blue-700 font-semibold mx-1 py-1 px-2 rounded text-white'>
                       <i className="bi bi-pencil-fill"></i>
                     </button>
                   </td>
                   <td className='border-2 border-gray-200 mb-1 px-1'>
-                    <button className='bg-red-500 hover:bg-blue-700 font-semibold mx-1 py-1 px-2 rounded text-white'>
+                    <button onClick={deleteData} className='bg-red-500 hover:bg-blue-700 font-semibold mx-1 py-1 px-2 rounded text-white'>
                       <i className="bi bi-trash-fill"></i>
                     </button>
                   </td>
                 </tr>
               </Fragment>
-            )}))
-          }
+            )})
+          )}
         </table>
       </main>
     </div>

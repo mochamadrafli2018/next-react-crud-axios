@@ -5,20 +5,24 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import axios from 'axios';
 
-export default function Login() {
+export default function AdminLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [keyword, setKeyword] = useState('');
   const [emailValidation, setEmailValidation] = useState(true);
   const [passwordValidation, setPasswordValidation] = useState(true);
+  const [keywordValidation, setKeywordValidation] = useState(true);
+  const [keywordMatch, setKeywordMatch] = useState(true);
   const [send, setSend] = useState(false);
   const [error, setError] = useState('');
-  const [token, setToken] = useState('');
   const router = useRouter();
 
   const loginHandler = async (e) => {
     // validation after button was click
-    if (!email) {setEmailValidation(false);}
-    if (!password) {setPasswordValidation(false);}
+    if (!email) { setEmailValidation(false); }
+    if (!password) { setPasswordValidation(false); }
+    if (!keyword) { setKeywordValidation(false); }
+    if (keyword && keyword !== 'admin') {setKeywordMatch(false);}
     e.preventDefault();
     // send data to server
     await axios.post('http://localhost:5000/api/login', 
@@ -28,7 +32,6 @@ export default function Login() {
       })
     )
     .then((response) => {
-      setSend(true);
       // set token on localStorage
       setToken(response.data.token);
       (localStorage.setItem('token', response.data.token));
@@ -63,7 +66,7 @@ export default function Login() {
           <div className='col-md-4'>
             <div className='card border-5px rounded shadow-sm'>
               <div className='card-body'>   
-                <h4 className='fw-bold'>Login Pengguna</h4>
+                <h4 className='fw-bold'>Admin Login</h4>
                 <hr/>
                 <form onSubmit={loginHandler}>
                   <div className='mb-3'>
@@ -106,6 +109,32 @@ export default function Login() {
                       Password harus diisi
                     </div>
                   )}
+                  <div className='mb-3'>
+                    <label className='form-label'>Keyword</label>
+                    <input 
+                      type='text' 
+                      className='form-control' 
+                      value={keyword} 
+                      onChange={(e) => {
+                        setKeyword(e.target.value);
+                        setKeywordValidation(true);
+                        setKeywordMatch(true);
+                        setSend(false);
+                        setError('');
+                      }} 
+                      placeholder='Masukkan Password'
+                    />
+                  </div>
+                  {keywordValidation === false && (
+                    <div className="alert alert-danger">
+                      Keyword harus diisi
+                    </div>
+                  )}
+                  {keywordMatch === false && (
+                    <div className="alert alert-danger">
+                      Keyword salah
+                    </div>
+                  )}
                   <div className='d-grid gap-2'>
                     <button onClick={loginHandler} type='submit' className='btn btn-primary'>
                       MASUK
@@ -126,14 +155,6 @@ export default function Login() {
                       Maaf email tidak terdaftar.
                     </div>
                   )}
-                  <div className='mt-3'>
-                      <p>Belum punya akun? Daftar terlebih dahulu</p>
-                  </div>
-                  <div className='d-grid gap-2'>
-                    <button onClick={() => { router.push('/register') }} className='btn btn-outline-primary'>
-                      DAFTAR
-                    </button>
-                  </div>
                 </form>
               </div>
             </div>
