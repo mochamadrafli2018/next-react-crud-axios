@@ -83,12 +83,16 @@ export default function Register() {
         ))}
       </nav>
 
-      <main className='bg-blue-100 flex flex-col poppins' style={{paddingTop:'90px', paddingBottom:'100px'}}>
-        <div className="row justify-content-center">
+      <main className='bg-blue-100 flex flex-col mt-0 poppins' 
+        style={{paddingTop:'0px', paddingBottom:'0px'}}
+      >
+        <img src="/wallpaper.jpg" alt="coding" width='100%' height='100%'/>
+
+        <div className="flex justify-center" style={{marginTop:'-60%'}}>
           <div className="col-md-8">
-            <div className="card border-5px rounded shadow-sm">
+            <div className="card border-2 rounded shadow-sm">
               <div className="card-body">
-                <h4 className="fw-bold">Daftar sebagai Pengguna Baru</h4>
+                <h4 className="font-bold">Daftar sebagai Pengguna Baru</h4>
                 <hr/>
                   <form onSubmit={registerHandler}>
                     <div className="row">
