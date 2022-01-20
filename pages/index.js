@@ -5,10 +5,9 @@ import '../styles/Home.module.css';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import {useRouter} from 'next/router';
 import Footer from '../components/Footer';
 import axios from 'axios';
-import {Accordion} from 'react-bootstrap';
+import {Spinner} from 'react-bootstrap';
 
 export default function Crud() {
   // get data from database
@@ -63,36 +62,37 @@ export default function Crud() {
         />
     
         <div className='mb-4' className='' style={{marginTop: '-50%'}}>
-          <div className='mx-auto mb-5 p-0 space-y-1 md:space-y-3 lg:space-y-4 text-left w-11/12 lg:w-5/6 text-white'>
+          <div className='mx-auto mb-5 p-0 space-y-1 md:space-y-3 lg:space-y-4 text-left w-11/12 md:w-5/6 lg:w-4/6 text-white'>
             <h3 className='font-bold text-xl md:text-3xl lg:text-5xl underline'>
               Express Basic, CRUD and Auth
             </h3>
             <p>Compilation of Express.js Back End (Node.js) Learning Sources</p>
             <p>by M. Rafli Ramadhan</p>
           </div>
-          <Accordion defaultActiveKey="0"
-            className='bg-slate-50 justify-center mb-3 mx-auto w-11/12 lg:w-5/6'
+          <div
+            className='my-3 mx-auto w-11/12 md:w-5/6 lg:w-4/6'
           >
             {loading ? (
               <p className='font-bold p-2 shadow text-center text-xl text-white'>
-                Loading...
+                <Spinner animation="border" variant="info" /> Loading...
               </p>
               ) : (data.map((item, index) => {
                 return (
-                  <Accordion.Item eventKey={index} className='my-2 shadow' key={index}>
-                    <Accordion.Header>
-                      <p className='font-bold my-0 hover:text-cyan-700'>{item.title} : {item.link}</p>
-                    </Accordion.Header>
-                    <Accordion.Body className='p-0'>
-                      <iframe src={item.link}
-                        style={{width: '100%',height: '1100px'}}
-                      ></iframe>
-                    </Accordion.Body>
-                  </Accordion.Item>
+                  <div className='card my-2'>
+                    <a key={index} href={item.link} 
+                      className='no-underline' 
+                      target='_blank' 
+                      rel='noreferrer'
+                    >
+                      <p className='bg-slate-400 hover:bg-green-500 border m-0 p-2 rounded shadow text-left text-white'>
+                        {item.title}
+                      </p>
+                    </a>
+                  </div>
                 )
               }))
             }
-          </Accordion>
+          </div>
         </div>
 
         <hr/>
