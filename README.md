@@ -40,3 +40,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 Axios Delete : https://stackoverflow.com/questions/51069552/axios-delete-request-with-body-and-headers
 
 UseRef Delete Data : https://www.bezkoder.com/react-axios-example/
+
+Axios Delete Data by Id in Class Component : https://stackoverflow.com/questions/53981989/delete-data-from-api-with-axios-and-reactjs
