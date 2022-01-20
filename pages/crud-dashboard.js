@@ -10,8 +10,8 @@ export default function Crud() {
 
   // authorization
   const [user, setUser] = useState('');
-  const [error, setError] = useState('');
-  const fetchData = async (token) => {
+  const [errorGetUserData, setErrorGetUserData] = useState('');
+  const getUserData = async (token) => {
     //set axios header with type Authorization + Bearer token
     axios.defaults.headers.common['authorization'] = `Bearer ${token}`
     await axios.get('http://localhost:5000/api/verify')
@@ -19,7 +19,7 @@ export default function Crud() {
         setUser(response.data);
     })
     .catch((err) => { 
-      setError(err.response.data); 
+      setErrorGetUserData(err.message);
     })
   }
 
@@ -32,6 +32,7 @@ export default function Crud() {
   // get data from database
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [errorGetData, setErrorGetData] = useState('');
   const getData = () => {
     setLoading(true);
     axios.get('http://localhost:5000/api')
@@ -40,17 +41,26 @@ export default function Crud() {
       setLoading(false); 
     })
     .catch((err) => { 
-      setError(err.response.message); 
+      setErrorGetData(err.message); 
     })
   }
 
   useEffect(() => {
+    setErrorGetUserData('');
+    setErrorGetData('');
+    setSuccessAddNewData(false);
+    setSuccessEditData(false);
+    setSuccessDeleteData(false);
+    setErrorGetUserData('');
+    setErrorAddNewData('');
+    setErrorEditData('');
+    setErrorDeleteData('');
     //get token from local storage
     const token = localStorage.getItem('token');
     if(!token) { 
       router.push('/login'); 
     }
-    fetchData(token);
+    getUserData(token);
     getData();
   }, []);
 
@@ -58,7 +68,8 @@ export default function Crud() {
   const [title, setTitle] = useState('');
   const [topic, setTopic] = useState('');
   const [link, setLink] = useState('');
-  const [successAddData, setSuccessAddData] = useState(false);
+  const [successAddNewData, setSuccessAddNewData] = useState(false);
+  const [errorAddNewData, setErrorAddNewData] = useState('');
   const submitNewData = () => {
     axios.post('http://localhost:5000/api',{
       title,
@@ -66,25 +77,43 @@ export default function Crud() {
       link,
     })
     .then(() => {
-      setSuccessAddData(true)
+      setSuccessAddNewData(true);
     })
     .catch((err) => { 
-      setSuccessAddData(false) 
+      setErrorAddNewData(err.message);
+      setSuccessAddNewData(false);
     })
   }
 
-  // edit data
-  const editData = () => {}
+  // edit data by id
+  const [successEditData, setSuccessEditData] = useState(false);
+  const [errorEditData, setErrorEditData] = useState('');
+  const editData = (id) => {
+    axios.put(`http://localhost:5000/api/${id}`)
+    .then(() => {
+      setSuccessEditData(true);
+      // refresh web app
+      router.push('/crud-dashboard');
+    })
+    .catch((err) => { 
+      setSuccessEditData(false);
+      setErrorEditData(err.message);
+    })
+  }
 
-  // delete data
+  // delete data by id
   const [successDeleteData, setSuccessDeleteData] = useState(false);
+  const [errorDeleteData, setErrorDeleteData] = useState('');
   const deleteData = (id) => {
     axios.delete(`http://localhost:5000/api/${id}`)
     .then(() => {
       setSuccessDeleteData(true);
+      // refresh web app
+      router.push('/crud-dashboard');
     })
     .catch((err) => { 
       setSuccessDeleteData(false);
+      setErrorDeleteData(err.message);
     })
   }
 
@@ -101,18 +130,21 @@ export default function Crud() {
         className='bg-black flex justify-end py-1 pr-3 top-0 shadow-sm space-x-3 text-black w-100 z-10'
       >
         <button onClick={logoutHandler} className='bg-red-500 hover:bg-red-600 font-semibold mx-1 py-2 px-2 rounded text-white'>
-          Log Out <i class='bi bi-box-arrow-left mx-1'></i>
+          <i className='bi bi-box-arrow-left mx-1'></i> Log Out
         </button>
       </nav>
 
-      <main className='bg-slate-100 m-0 px-3 pb-3' style={{paddingTop:'70px'}}>
-        <p className='fw-bold mx-1 text-dark text-xl'>
-          Login berhasil <span className='underline'>{user.name}</span>
+      <main className='bg-slate-300 m-0 px-3 pb-3' style={{paddingTop:'70px'}}>
+        <p className='fw-bold mx-1 text-dark text-lg'>
+          Login berhasil, Hallo{' '}
+          <span className='underline'>{user.name}</span>{' '}
+          <i class="bi bi-check-circle-fill text-blue-500"></i>
         </p>
         <hr/>
         <form 
           onSubmit={submitNewData}
           className='border-2 border-blue-500 mt-1 mb-2 mx-auto p-3 rounded shadow-sm w-2/5'
+          style={{minWidth:'400px'}}
         >
           <h3 className='font-bold my-1 text-xl text-blue-700 text-left'>Add or Edit Data</h3>
           <hr/>
@@ -125,7 +157,13 @@ export default function Crud() {
                 value={title} 
                 onChange={(e) => {
                   setTitle(e.target.value);
-                  setSuccessAddData(false);
+                  setSuccessAddNewData(false);
+                  setSuccessEditData(false);
+                  setSuccessDeleteData(false);
+                  setErrorGetUserData('');
+                  setErrorAddNewData('');
+                  setErrorEditData('');
+                  setErrorDeleteData('');
                 }}
               />
             </div>
@@ -137,7 +175,13 @@ export default function Crud() {
                 value={topic} 
                 onChange={(e) => {
                   setTopic(e.target.value);
-                  setSuccessAddData(false);
+                  setSuccessAddNewData(false);
+                  setSuccessEditData(false);
+                  setSuccessDeleteData(false);
+                  setErrorGetUserData('');
+                  setErrorAddNewData('');
+                  setErrorEditData('');
+                  setErrorDeleteData('');
                 }}
               />
             </div>
@@ -149,7 +193,13 @@ export default function Crud() {
                 value={link} 
                 onChange={(e) => {
                   setLink(e.target.value);
-                  setSuccessAddData(false);
+                  setSuccessAddNewData(false);
+                  setSuccessEditData(false);
+                  setSuccessDeleteData(false);
+                  setErrorGetUserData('');
+                  setErrorAddNewData('');
+                  setErrorEditData('');
+                  setErrorDeleteData('');
                 }}
               />
             </div>    
@@ -157,79 +207,109 @@ export default function Crud() {
           <div className='d-grid gap-2 mt-2'>
             <button type='submit' className='btn btn-primary'>Submit</button>
           </div>
-          {successAddData === true && (
+          {successAddNewData === true && (
             <div className='alert alert-primary my-2'>
               Data berhasil di tambahkan
+            </div>
+          )}
+          {errorAddNewData && (
+            <div className='alert alert-primary my-1'>
+              Add data error : {errorAddNewData}
+            </div>
+          )}
+          {successEditData === true && (
+            <div className='alert alert-primary my-1'>
+              Data edited
+            </div>
+          )}
+          {errorEditData && (
+            <div className='alert alert-primary my-1'>
+              Edit data error : {errorEditData}
             </div>
           )}
         </form>
 
         <hr/>
+        
         <h3 className='font-bold text-xl text-blue-700 text-center'>All Data Display</h3>
-        {successAddData === true && (
+        {errorGetUserData && (
           <div className='alert alert-primary my-1'>
-            Error : {error}
+            Get user data error : {errorGetUserData}
           </div>
         )}
-        <table className='mx-auto mt-2 mb-3 w-5/6'>
-          <thead class="bg-gray-50">
-            <tr className='border-2 border-gray-200'>
-              <th className='font-bold font-medium pl-3 text-left text-md text-gray-500 tracking-wider uppercase'>
-                _id
-              </th>
-              <th className='font-bold font-medium pl-3 py-2 text-left text-md text-gray-500 tracking-wider uppercase'>
-                Title
-              </th>
-              <th className='font-bold font-medium pl-3 py-2 text-left text-md text-gray-500 tracking-wider uppercase'>
-                Topic
-              </th>
-              <th className='font-bold font-medium pl-3 py-2 text-left text-md text-gray-500 tracking-wider uppercase'>
-                Link
-              </th>
-              <th className='font-bold font-medium pr-2 py-2 text-left text-md text-gray-500 tracking-wider uppercase'>
-                Edit
-              </th>
-              <th className='font-bold font-medium pr-2 py-2 text-left text-md text-gray-500 tracking-wider uppercase'>
-                Delete
-              </th>
-            </tr>
-          </thead>
-          {loading ? (
-            <Fragment>Loading...</Fragment>
-          ) : (data.map((item, index) => {
-            return (
-              <Fragment key={index}>
-                <tr className='border-2 border-gray-200'>
-                  <td className='mb-1 px-1'>{item._id}</td>
-                  <td className='mb-1 px-1'>{item.title}</td>
-                  <td className='mb-1 px-1'>{item.topic}</td>
-                  <td className='mb-1 px-1'>{item.link}</td>
-                  <td className='mb-1 px-1'>
-                    <button onClick={editData} 
-                      className='bg-blue-500 hover:bg-blue-700 font-semibold mx-1 py-1 px-2 rounded text-white'
-                    >
-                      <i className='bi bi-pencil-fill'></i>
-                    </button>
-                  </td>
-                  <td className='mb-1 px-1'>
-                    <button onClick= {deleteData(item._id)} 
-                      className='bg-red-500 hover:bg-red-700 font-semibold mx-1 py-1 px-2 rounded text-white'
-                    >
-                      <i className='bi bi-trash-fill'></i>
-                    </button>
-                  </td>
-                </tr>
-              </Fragment>
-            )})
-          )}
-        </table>
-        {successDeleteData === true && (
-          setTimeout(() => {
-            <div className='alert alert-primary mx-auto my-1 text-center w-4/5'>
-              Data deleted
-            </div>
-          }, 5000)
+        {errorGetData && (
+          <div className='alert alert-primary my-1'>
+            Get data error : {errorGetData}
+          </div>
         )}
+        {successDeleteData === true && (
+          <div className='alert alert-primary my-1'>
+            Data deleted
+          </div>
+        )}
+        {errorDeleteData && (
+          <div className='alert alert-primary my-1'>
+            Delete data error : {errorDeleteData}
+          </div>
+        )}
+        <div className='mx-auto' style={{
+          width:'98%',maxWidth: '98%','word-break':'break-all'
+        }}>
+          <table className='mx-auto mt-2 mb-3'>
+            <thead className='bg-gray-100'>
+              <tr className='border-2 border-gray-400'>
+                <th className='font-bold font-medium pl-3 text-left text-md text-gray-600 tracking-wider uppercase'>
+                  _id
+                </th>
+                <th className='font-bold font-medium pl-3 py-2 text-left text-md text-gray-600 tracking-wider uppercase'>
+                  Title
+                </th>
+                <th className='font-bold font-medium pl-3 py-2 text-left text-md text-gray-600 tracking-wider uppercase'>
+                  Topic
+                </th>
+                <th className='font-bold font-medium pl-3 py-2 text-left text-md text-gray-600 tracking-wider uppercase'>
+                  Link
+                </th>
+                <th className='font-bold font-medium pr-2 py-2 text-left text-md text-gray-600 tracking-wider uppercase'>
+                  Edit
+                </th>
+                <th className='font-bold font-medium pr-2 py-2 text-left text-md text-gray-600 tracking-wider uppercase'>
+                  Delete
+                </th>
+              </tr>
+            </thead>
+            {loading ? (
+              <Fragment>
+                <tr className='border-2 border-gray-200 text-center'>Loading...</tr>
+              </Fragment>
+            ) : (data.map((item, index) => {
+              return (
+                <Fragment key={index}>
+                  <tr className='bg-gray-200 border-2 border-gray-400'>
+                    <td className='mb-1 px-1'>{item._id}</td>
+                    <td className='mb-1 px-1'>{item.title}</td>
+                    <td className='mb-1 px-1'>{item.topic}</td>
+                    <td className='mb-1 px-1'>{item.link}</td>
+                    <td className='mb-1 px-1'>
+                      <button onClick={editData} 
+                        className='bg-blue-500 hover:bg-blue-700 font-semibold mx-1 py-1 px-2 rounded text-white'
+                      >
+                        <i className='bi bi-pencil-fill'></i>
+                      </button>
+                    </td>
+                    <td className='mb-1 px-1'>
+                      <button onClick= {() => deleteData(item._id)} 
+                        className='bg-red-500 hover:bg-red-700 font-semibold mx-1 py-1 px-2 rounded text-white'
+                      >
+                        <i className='bi bi-trash-fill'></i>
+                      </button>
+                    </td>
+                  </tr>
+                </Fragment>
+              )})
+            )}
+          </table>
+        </div>
       </main>
     </div>
   )
