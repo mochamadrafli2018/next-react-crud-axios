@@ -93,7 +93,7 @@ export default function Crud() {
     .then(() => {
       setSuccessEditData(true);
       // refresh web app
-      router.push('/crud-dashboard');
+      window.location.reload();
     })
     .catch((err) => { 
       setSuccessEditData(false);
@@ -109,7 +109,7 @@ export default function Crud() {
     .then(() => {
       setSuccessDeleteData(true);
       // refresh web app
-      router.push('/crud-dashboard');
+      window.location.reload();
     })
     .catch((err) => { 
       setSuccessDeleteData(false);
