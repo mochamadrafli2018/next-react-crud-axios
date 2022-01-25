@@ -16,13 +16,13 @@ export default function Crud() {
 
   const getData = () => {
     setLoading(true);
-    axios.get('https://express-crud-backend.herokuapp.com/api')
+    axios.get('http://localhost:5000/api');
     .then((res) => { 
-      setData(res.data)
+      setData(res.data);
       setLoading(false); 
     })
     .catch((err) => { 
-      console.log(err) 
+      console.log(err);
     })
   }
 
@@ -78,8 +78,8 @@ export default function Crud() {
               </p>
               ) : (data.map((item, index) => {
                 return (
-                  <div className='card my-2'>
-                    <a key={index} href={item.link} 
+                  <div className='card my-2' key={index}>
+                    <a href={item.link} 
                       className='no-underline' 
                       target='_blank' 
                       rel='noreferrer'
