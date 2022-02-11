@@ -40,8 +40,8 @@ export default function Crud() {
       setData(res.data)
       setLoading(false); 
     })
-    .catch((err) => { 
-      setErrorGetData(err.message); 
+    .catch((err) => {
+      setErrorGetData(err.message);
     })
   }
 

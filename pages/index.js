@@ -5,6 +5,7 @@ import '../styles/Home.module.css';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import axios from 'axios';
 import {Spinner} from 'react-bootstrap';
@@ -16,7 +17,7 @@ export default function Crud() {
 
   const getData = () => {
     setLoading(true);
-    axios.get('http://localhost:5000/api');
+    axios.get('http://localhost:5000/api')
     .then((res) => { 
       setData(res.data);
       setLoading(false); 
@@ -39,22 +40,7 @@ export default function Crud() {
         <link rel="icon" href="https://clipground.com/images/programming-logo-clipart-5.jpg"></link>
       </Head>
 
-      <nav style={{backgroundColor:'transparent',position:'fixed'}}
-        className='flex justify-center m-0 py-1 px-0 top-0 shadow-sm space-x-3 text-black w-100'
-      >
-        {[
-          ['Home', '/'],
-          ['Register', '/register'],
-          ['Login','/login'],
-          ['Admin','/admin'],
-        ].map(([title, url, index]) => (
-          <Link href={url} key={index}>
-            <a className="font-bold bg-green-300 hover:bg-green-400 no-underline my-0 px-3 py-2 rounded-lg text-white">
-              {title}
-            </a>
-          </Link>
-        ))}
-      </nav>
+      <Navbar/>
 
       <main className='p-0 m-0'>
         <img src="/wallpaper.jpg" alt="coding" width='100%' height='100%' 
